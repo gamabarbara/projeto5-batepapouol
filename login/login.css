@@ -48,10 +48,36 @@ button {
     font-size: 18px;
     font-weight: 400;
     border: none;
+
 }
 button:hover {
     opacity: .8;
 }
 input::placeholder {
     text-align: center;
+}
+a {
+    text-decoration: none;
+    color: #696969;
+
+}
+a:visited {
+    text-decoration: none;
+    color: #696969;
+}
+.escondido {
+    display: none;
+}
+.alert {
+    font-family: 'Roboto Flex', sans-serif;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    font-weight: bold;
+    font-style: italic;
+}
+.hidden {
+    display: none;
 }
