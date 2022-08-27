@@ -25,7 +25,7 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
     align-items: center;
 }
-.text {
+.footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -34,7 +34,7 @@
     box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
 }
 input {
-    width: 145px;
+    width: 100%;
     height: 30px;
     border: none;
     margin-left: 17px;
@@ -51,7 +51,20 @@ input::placeholder {
     height: 26px;
     background-color: transparent;
 }
-ion-icon {
+ 
+button {
+    border: none;
     font-size: 26px;
     margin-right: 18px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.footer-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    bottom: 0;
+}
+.container {
+    position: relative;
 }

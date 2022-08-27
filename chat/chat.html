@@ -5,19 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="chat.css" />
-    <title>Chat</title>
+    <title>Bate Papo UOL</title>
   </head>
   <body>
     <div class="container">
-      <div class="header">
+      <header class="header">
         <img src="../assets/logo 2.png" class="image1" />
         <img src="../assets/Vector.png" class="image2" />
-      </div>
-      <div class="messages"></div>
-      <div class="text">
-        <input type="text" placeholder="Escreva aqui..." />
-        <ion-icon name="paper-plane-outline"></ion-icon>
-      </div>
+      </header>
+      <main class="messages">
+        <ul class="messages-container"></ul>
+      </main>
+      <footer class="footer-container">
+        <div class="footer">
+          <input type="text" placeholder="Escreva aqui..." />
+          <button><ion-icon name="paper-plane-outline"></ion-icon></button>
+        </div>
+      </footer>
     </div>
     <script
       type="module"
