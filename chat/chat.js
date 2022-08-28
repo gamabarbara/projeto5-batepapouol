@@ -1,20 +1,30 @@
 let apiUrl = "https://mock-api.driven.com.br/api/v6/uol";
-let userName;
-let userLastName;
 let receptor = "Todos";
 let messageType = "message";
+let userName;
+let userLastName;
+let lastTime;
 
 function startChat() {
   loadMessages();
+  getUsers();
 
   setInterval(loadMessages, 3000);
   setInterval(userStatus, 5000);
+  setInterval(getUsers, 10000);
+
+  document.addEventListener("enter", sendMessageWithEnter);
+}
+
+function sendMessageWithEnter(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
 }
 
 function enterChat() {
   let name = document.querySelector(".input-value");
   let userName = name.value;
-  console.log(userName);
   const promise = axios.post(`${apiUrl}/participants`, {
     name: userName,
   });
@@ -54,14 +64,27 @@ function generateMessages(response) {
         <span class="target"><strong>${response.data[i].to}:</strong></span>
         <span class="text-message"> ${response.data[i].text} </span>`;
     }
-    if (response.data[i].type === "private") {
+    if (
+      response.data[i].type === "private_message" &&
+      (response.data[i].to === userName || response.data[i].from === userName)
+    ) {
       ul.innerHTML += `<li class="private">
         <span class="time">(${response.data[i].time}) </span>
         <span><strong> ${response.data[i].from} </strong></span>
-        <span> para </span>
+        <span> reservadamente para </span>
         <span><strong> ${response.data[i].to} </strong></span>
         <span> ${response.data[i].text} </span>`;
     }
+    const lastMessage = response.data[response.data.length - 1].time;
+    scrollChat(lastMessage);
+  }
+}
+
+function scrollChat(lastMessage) {
+  if (lastMessage !== lastTime) {
+    const lastMessage = document.querySelector(".users li:last-child");
+    lastMessage.scrollIntoView();
+    lastTime = lastMessage;
   }
 }
 
@@ -82,3 +105,4 @@ function sendMessages() {
 }
 
 startChat();
+

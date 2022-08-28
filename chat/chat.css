@@ -80,7 +80,9 @@ button {
   height: 80%;
   width: 100%;
   list-style: none;
-  overflow-y: scroll;
+  overflow-y: auto;
+  background-color: rebeccapurple;
+  height: 79%;
 }
 .in-out-room {
   width: 100%;
@@ -105,11 +107,11 @@ strong {
   background-color: #ffffff;
   border-radius: 2px;
   font-size: 14px;
-  height: 40px;
+  height: fit-content;
+  padding: 5px 5px 5px 5px;
+  line-height: 110%;
 }
 .target {
   margin-left: 3px;
 }
-.text-message {
-  background-color: rebeccapurple;
-}
+

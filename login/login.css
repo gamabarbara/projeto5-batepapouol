@@ -2,6 +2,7 @@
 .container {
     width: 375px;
     height: 667px;
+    border: 1px solid rebeccapurple;
 }
 .img {
     display: flex;
