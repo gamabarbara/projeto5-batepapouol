@@ -9,19 +9,56 @@
   </head>
   <body>
     <div class="container">
+      <div class="background-menu background-hidden" onclick="openMenu()"></div>
       <header class="header">
         <img src="../assets/logo 2.png" class="image1" />
-        <img src="../assets/Vector.png" class="image2" />
+        <img src="../assets/Vector.png" class="image2" onclick="openMenu()" />
       </header>
       <main class="messages-container">
         <ul class="users"></ul>
       </main>
       <footer class="footer-container">
         <div class="footer">
-          <input type="text" placeholder="Escreva aqui..." class="text" maxlength="60"/>
-          <button onclick="sendMessages()"><ion-icon name="paper-plane-outline"></ion-icon></button>
+          <input
+            type="text"
+            placeholder="Escreva aqui..."
+            class="text"
+            maxlength="60"
+          />
+          <span class="sending">Enviando para todos</span>
+          <button onclick="sendMessages()">
+            <ion-icon name="paper-plane-outline"></ion-icon>
+          </button>
         </div>
       </footer>
+      <aside class="menu hidden">
+        <h3>Escolha um contato para enviar mensagem:</h3>
+        <ul class="target">
+          <li>aaaa</li>
+        </ul>
+        <h3>Escolha a visibilidade</h3>
+        <ul class="visibilities">
+          <li
+            class="target-public selected"
+            onclick="chooseVisibility(this, 'message')"
+          >
+            <ion-icon name="lock-open"></ion-icon>Público<ion-icon
+              class="check"
+              name="checkmark-outline"
+            ></ion-icon>
+          </li>
+          <li
+            class="target-private"
+            onclick="chooseVisibility(this, 'privateMessage')"
+          >
+            <ion-icon name="lock-closed"></ion-icon>Reservadamente<ion-icon
+              class="check"
+              name="checkmark-outline"
+            >
+            </ion-icon>
+          </li>
+        </ul>
+      </aside>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script

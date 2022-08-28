@@ -7,9 +7,12 @@ let lastTime;
 
 function startChat() {
   loadMessages();
+  getUsers();
   setInterval(loadMessages, 3000);
   setInterval(userStatus, 5000);
-  document.addEventListener("enter", sendMessageWithEnter);
+  setInterval(getUsers, 10000);
+
+  document.addEventListener("keyup", sendMessageWithEnter);
 }
 
 function sendMessageWithEnter(event) {
@@ -67,18 +70,20 @@ function generateMessages(response) {
       ul.innerHTML += `<li class="in-out-room">
       <span class="time">(${response.data[i].time})</span>
       <span><strong> ${response.data[i].from} </strong></span>
-      <span> ${response.data[i].text} </span>`;
+      <span> ${response.data[i].text} </span>
+      </li>`;
     }
     if (response.data[i].type === "message") {
       ul.innerHTML += `<li class="message">
         <span class="time">(${response.data[i].time}) </span>
         <span><strong> ${response.data[i].from} </strong></span>
         <span> para </span>
-        <span class="target"><strong>${response.data[i].to}:</strong></span>
-        <span class="text-message"> ${response.data[i].text} </span>`;
+        <span class="to"><strong>${response.data[i].to}:</strong></span>
+        <span class="text-message"> ${response.data[i].text} </span>
+        </li>`;
     }
     if (
-      response.data[i].type === "private_message" &&
+      response.data[i].type === "privateMessage" &&
       (response.data[i].to === userName || response.data[i].from === userName)
     ) {
       ul.innerHTML += `<li class="private">
@@ -89,23 +94,23 @@ function generateMessages(response) {
         <span> ${response.data[i].text} </span>
         </li>`;
     }
+
     const lastMessage = response.data[response.data.length - 1].time;
-    /*     scrollChat(lastMessage); */
+    scrollChat(lastMessage);
+  }
+
+  function scrollChat(lastMessage) {
+    lastMessage = document.querySelector(".messages-container li:last-child");
+    if (lastMessage !== lastTime) {
+      lastMessage.scrollIntoView();
+      lastTime = lastMessage;
+    }
   }
 }
 
-/* function scrollChat(lastMessage) {
-  if (lastMessage !== lastTime) {
-    const lastMessage = document.querySelector(".users li:last-child");
-    lastMessage.scrollIntoView();
-    lastTime = lastMessage;
-  }
-} */
-
 function sendMessages() {
   const input = document.querySelector(".text");
-  let inputValue = input.value;
-  console.log(inputValue);
+  const inputValue = input.value;
   const message = {
     from: userName,
     to: receptor,
@@ -117,4 +122,61 @@ function sendMessages() {
   promise.then(loadMessages);
   promise.catch(reloadChat);
 }
+
+function generateUser(response) {
+  let listOfUsers = document.querySelector(".target");
+  let classOfUsers = "";
+  if (receptor === "Todos") {
+    classOfUsers = "selected";
+  }
+  listOfUsers.innerHTML = `<li class="target-public ${classOfUsers} onclick="targetMessage(this)">
+  <ion-icon name="people"></ion-icon><span class="name">Todos</span><ion-icon class="check" name="checkmark-outline">
+  </ion-icon>
+  </li>`;
+
+  for (let i = 0; i < response.data.length; i++) {
+    if (receptor === response.data[i].name) {
+      classOfUsers = "selected";
+    } else {
+      classOfUsers = "";
+    }
+    listOfUsers.innerHTML += `<li class="target-public ${classOfUsers} onclick="targetMessage(this)">
+    <ion-icon name="person-circle"></ion-icon>
+    <span class="name">${response.data[i].name}</span><ion-icon name="checkmark-outline">
+    </ion-icon>
+  </li>`;
+  }
+}
+
+function targetMessage(element) {
+  receptor = element.querySelector(".name").innerHTML;
+  const message = document.querySelector(".sending");
+  if (messageType === "message") {
+    message.innerHTML = `Enviando para ${receptor}`;
+  } else {
+    message.innerHTML = `Enviando para ${receptor} (reservadamente)`;
+  }
+  getUsers();
+}
+
+function getUsers() {
+  const promise = axios.get(`${apiUrl}/participants`);
+  promise.then(generateUser);
+}
+
+function chooseVisibility(element, type) {
+  document
+    .querySelector(".visibilities .selected")
+    .classList.remove("selected");
+  element.classList.add("selected");
+  messageType = type;
+}
+
+function openMenu() {
+  const menu = document.querySelector(".menu");
+  const background = document.querySelector(".background-menu");
+  menu.classList.toggle("hidden");
+  background.classList.toggle("background-hidden");
+}
+
 enterRoom();
