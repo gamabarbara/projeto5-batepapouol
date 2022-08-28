@@ -1,12 +1,14 @@
 let apiUrl = "https://mock-api.driven.com.br/api/v6/uol";
+let userName;
+let userLastName;
+let receptor = "Todos";
+let messageType = "message";
 
 function startChat() {
   loadMessages();
-  getUsers();
 
   setInterval(loadMessages, 3000);
   setInterval(userStatus, 5000);
-  setInterval(getUsers, 10000);
 }
 
 function enterChat() {
@@ -25,7 +27,7 @@ function userStatus() {
     name: userName,
   });
 }
-function realoadChat() {
+function reloadChat() {
   window.location.reload();
 }
 
@@ -39,39 +41,44 @@ function generateMessages(response) {
   ul.innerHTML = "";
   for (let i = 0; i < response.data.length; i++) {
     if (response.data[i].type === "status") {
-      ul.innerHTML += `<li>
-      <span class="time">${response.data[i].time}</span>
-      <span><strong>${response.data[i].from}</strong></span>
-      <span>${response.data[i].text}</span>`;
+      ul.innerHTML += `<li class="in-out-room">
+      <span class="time">(${response.data[i].time})</span>
+      <span><strong> ${response.data[i].from} </strong></span>
+      <span> ${response.data[i].text} </span>`;
     }
     if (response.data[i].type === "message") {
-        ul.innerHTML += `<li>
-        <span class="time">${response.data[i].time}</span>
-        <span><strong>${response.data[i].from}</strong></span>
+      ul.innerHTML += `<li class="message">
+        <span class="time">(${response.data[i].time}) </span>
+        <span><strong> ${response.data[i].from} </strong></span>
         <span> para </span>
-        <span><strong>${response.data[i].to}</strong></span>
-        <span>${response.data[i].text}</span>`;
-      }
+        <span class="target"><strong>${response.data[i].to}:</strong></span>
+        <span class="text-message"> ${response.data[i].text} </span>`;
+    }
+    if (response.data[i].type === "private") {
+      ul.innerHTML += `<li class="private">
+        <span class="time">(${response.data[i].time}) </span>
+        <span><strong> ${response.data[i].from} </strong></span>
+        <span> para </span>
+        <span><strong> ${response.data[i].to} </strong></span>
+        <span> ${response.data[i].text} </span>`;
+    }
   }
 }
 
 function sendMessages() {
   const input = document.querySelector(".text");
-  const inputValue = input.value;
+  let inputValue = input.value;
+  console.log(inputValue);
   const message = {
     from: userName,
-    to: "Todos",
+    to: receptor,
     text: inputValue,
-    type: "message",
+    type: messageType,
   };
   inputValue = "";
   const promise = axios.post(`${apiUrl}/messages`, message);
-  promise.then();
-  promise.catch();
+  promise.then(loadMessages);
+  promise.catch(reloadChat);
 }
 
-function getUsers() {
-  const promise = axios.get(`${apiUrl}/participants`);
-  promise.then();
-}
 startChat();
