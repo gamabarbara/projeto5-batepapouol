@@ -7,22 +7,35 @@ let lastTime;
 
 function startChat() {
   loadMessages();
-  getUsers();
-
   setInterval(loadMessages, 3000);
   setInterval(userStatus, 5000);
-  setInterval(getUsers, 10000);
-
   document.addEventListener("enter", sendMessageWithEnter);
 }
 
 function sendMessageWithEnter(event) {
   if (event.key === "Enter") {
-    sendMessage();
+    sendMessages();
   }
 }
 
-function enterChat() {
+function enterRoom() {
+  userName = prompt("Qual o seu nome?");
+  const promise = axios.post(`${apiUrl}/participants`, {
+    name: userName,
+  });
+  promise.then(startChat);
+  promise.catch(nameAlredyUsed);
+}
+function nameAlredyUsed() {
+  userName = prompt("Este nome já está em uso. Por favor, digite outro nome!");
+  const promise = axios.post(`${apiUrl}/participants`, {
+    name: userName,
+  });
+  promise.then(startChat);
+  promise.catch(nameAlredyUsed);
+}
+
+/* function enterChat() {
   let name = document.querySelector(".input-value");
   let userName = name.value;
   const promise = axios.post(`${apiUrl}/participants`, {
@@ -31,9 +44,9 @@ function enterChat() {
   promise.then(startChat);
   promise.catch(reloadChat);
 }
-
+ */
 function userStatus() {
-  const promise = axios.post(`${apiUrl}/status`, {
+  axios.post(`${apiUrl}/status`, {
     name: userName,
   });
 }
@@ -73,20 +86,21 @@ function generateMessages(response) {
         <span><strong> ${response.data[i].from} </strong></span>
         <span> reservadamente para </span>
         <span><strong> ${response.data[i].to} </strong></span>
-        <span> ${response.data[i].text} </span>`;
+        <span> ${response.data[i].text} </span>
+        </li>`;
     }
     const lastMessage = response.data[response.data.length - 1].time;
-    scrollChat(lastMessage);
+    /*     scrollChat(lastMessage); */
   }
 }
 
-function scrollChat(lastMessage) {
+/* function scrollChat(lastMessage) {
   if (lastMessage !== lastTime) {
     const lastMessage = document.querySelector(".users li:last-child");
     lastMessage.scrollIntoView();
     lastTime = lastMessage;
   }
-}
+} */
 
 function sendMessages() {
   const input = document.querySelector(".text");
@@ -98,11 +112,9 @@ function sendMessages() {
     text: inputValue,
     type: messageType,
   };
-  inputValue = "";
+  input.value = "";
   const promise = axios.post(`${apiUrl}/messages`, message);
   promise.then(loadMessages);
   promise.catch(reloadChat);
 }
-
-startChat();
-
+enterRoom();
