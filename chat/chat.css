@@ -7,7 +7,6 @@
 .container {
   width: 375px;
   height: 667px;
-  border: 1px solid rebeccapurple;
   display: flex;
   flex-direction: column;
 }
@@ -146,7 +145,7 @@ strong {
   display: none;
 }
 aside.menu {
-  position: fixed;
+  position: absolute;
   z-index: 3;
   top: 0;
   right: 0;
@@ -158,11 +157,13 @@ aside.menu {
   padding: 0 20px;
   transition: all 150ms linear;
   overflow-y: scroll;
-  background-color: rebeccapurple;
+}
+aside.menu::-webkit-scrollbar {
+  display: none;
 }
 
 aside.menu.hidden {
-  right: -210px;
+  display: none;
 }
 aside.menu li {
   font-size: 14px;
@@ -179,10 +180,7 @@ aside.menu ion-icon {
   margin-top: -2px;
   flex-shrink: 0;
 }
-.time {
-  margin-right: 5px;
-  color: #b8b8b8;
-}
+
 .menu h3 {
   text-align: center;
   margin: 20px 0;
@@ -195,7 +193,7 @@ aside.menu ion-icon {
 
 .check {
   position: absolute;
-  right: -5px;
+  right: -15px;
   top: -2px;
   color: #61aa47;
   display: none;

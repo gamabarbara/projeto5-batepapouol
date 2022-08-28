@@ -33,12 +33,12 @@
       </footer>
       <aside class="menu hidden">
         <h3>Escolha um contato para enviar mensagem:</h3>
-        <ul class="target">
-          <li>aaaa</li>
+        <ul class="target"></ul>
         </ul>
         <h3>Escolha a visibilidade</h3>
         <ul class="visibilities">
           <li
+          data-identifier="visibility"
             class="target-public selected"
             onclick="chooseVisibility(this, 'message')"
           >
@@ -48,6 +48,7 @@
             ></ion-icon>
           </li>
           <li
+          data-identifier="visibility"
             class="target-private"
             onclick="chooseVisibility(this, 'privateMessage')"
           >

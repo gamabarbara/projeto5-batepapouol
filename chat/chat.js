@@ -129,9 +129,8 @@ function generateUser(response) {
   if (receptor === "Todos") {
     classOfUsers = "selected";
   }
-  listOfUsers.innerHTML = `<li class="target-public ${classOfUsers} onclick="targetMessage(this)">
-  <ion-icon name="people"></ion-icon><span class="name">Todos</span><ion-icon class="check" name="checkmark-outline">
-  </ion-icon>
+  listOfUsers.innerHTML = `<li class="target-public ${classOfUsers} onclick="targetMessage(this)" data-identifier="participant">
+  <ion-icon name="people"></ion-icon><span class="name">Todos</span>
   </li>`;
 
   for (let i = 0; i < response.data.length; i++) {
@@ -140,10 +139,9 @@ function generateUser(response) {
     } else {
       classOfUsers = "";
     }
-    listOfUsers.innerHTML += `<li class="target-public ${classOfUsers} onclick="targetMessage(this)">
+    listOfUsers.innerHTML += `<li class="target-public ${classOfUsers} onclick="targetMessage(this)" data-identifier="participant">
     <ion-icon name="person-circle"></ion-icon>
-    <span class="name">${response.data[i].name}</span><ion-icon name="checkmark-outline">
-    </ion-icon>
+    <span class="name">${response.data[i].name}</span>
   </li>`;
   }
 }
