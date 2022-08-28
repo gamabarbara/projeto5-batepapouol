@@ -68,3 +68,9 @@ button {
 .container {
     position: relative;
 }
+.messages-container {
+    height: 80%;
+    width: 100%;
+    list-style: none;
+    overflow-y: scroll;
+}
