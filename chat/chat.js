@@ -129,21 +129,25 @@ function generateUser(response) {
   if (receptor === "Todos") {
     classOfUsers = "selected";
   }
-  listOfUsers.innerHTML = `<li class="target-public ${classOfUsers} onclick="targetMessage(this)" data-identifier="participant">
-  <ion-icon name="people"></ion-icon><span class="name">Todos</span>
+  listOfUsers.innerHTML = `<li data-identifier="visibility" class="target-public ${classOfUsers} onclick="targetMessage(this)" >
+  <ion-icon name="people"></ion-icon><span class="name">Todos</span><ion-icon class="check" name="checkmark-outline"></ion-icon>
   </li>`;
 
   for (let i = 0; i < response.data.length; i++) {
     if (receptor === response.data[i].name) {
       classOfUsers = "selected";
+      console.log(classOfUsers);
     } else {
       classOfUsers = "";
     }
-    listOfUsers.innerHTML += `<li class="target-public ${classOfUsers} onclick="targetMessage(this)" data-identifier="participant">
+    listOfUsers.innerHTML += `<li data-identifier="participant" class="target-public ${classOfUsers} onclick="targetMessage(this)" >
     <ion-icon name="person-circle"></ion-icon>
     <span class="name">${response.data[i].name}</span>
+    <ion-icon class="check" name="checkmark-outline">
+  </ion-icon>
   </li>`;
   }
+  console.log(classOfUsers);
 }
 
 function targetMessage(element) {

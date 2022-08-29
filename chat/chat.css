@@ -38,6 +38,7 @@
   height: 80px;
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
   background-color: #ffffff;
+  padding-bottom: 10px;
 }
 input {
   width: 100%;
@@ -76,7 +77,7 @@ button {
   background: #e5e5e5;
 }
 main {
-  height: 76%;
+  height: 75%;
   width: 100%;
   list-style: none;
   overflow: scroll;
@@ -117,9 +118,7 @@ strong {
   min-height: 40px;
   min-width: 370px;
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+
   margin-top: 3px;
 }
 .to {
@@ -201,10 +200,19 @@ aside.menu ion-icon {
 .background-menu {
   height: 100%;
   width: 100%;
-  position: fixed;
+  position: absolute;
   z-index: 2;
   top: 0;
   right: 0;
   background: #0009;
   transition: all 150ms linear;
+}
+.sending {
+  width: 400px;
+  font-size: 14px;
+  color: #696969;
+  font-weight: 400;
+  position: absolute;
+  bottom: 15px;
+  left: 17px;
 }
