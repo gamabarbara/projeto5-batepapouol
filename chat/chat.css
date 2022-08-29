@@ -117,7 +117,8 @@ strong {
   height: fit-content;
   min-height: 40px;
   min-width: 370px;
-  align-items: center;
+  display: flex;
+  align-items: center; /* só funciona para mensagens pequenas */
 
   margin-top: 3px;
 }
