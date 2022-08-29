@@ -37,17 +37,6 @@ function nameAlredyUsed() {
   promise.then(startChat);
   promise.catch(nameAlredyUsed);
 }
-
-/* function enterChat() {
-  let name = document.querySelector(".input-value");
-  let userName = name.value;
-  const promise = axios.post(`${apiUrl}/participants`, {
-    name: userName,
-  });
-  promise.then(startChat);
-  promise.catch(reloadChat);
-}
- */
 function userStatus() {
   axios.post(`${apiUrl}/status`, {
     name: userName,
